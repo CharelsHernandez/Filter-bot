@@ -33,7 +33,7 @@ async def addchannel(client: Bot, message: Message):
         return
 
     try:
-        cmd, text = message.text.split(" ", 1)
+        args = message.text.split(" ", 3)
     except:
         await message.reply_text(
             "<i>Enter in correct format!\n\n<code>/add channelid</code>  or\n"
@@ -41,6 +41,12 @@ async def addchannel(client: Bot, message: Message):
             "\n\nGet Channel id from @ChannelidHEXbot",
         )
         return
+    if (len(args) == 3) & (args[1] == '-c'):
+        cp_channel = True
+        text = args[2]
+    else:
+        cp_channel = False
+        text = args[1]
     try:
         if not text.startswith("@"):
             chid = int(text)
@@ -114,18 +120,26 @@ async def addchannel(client: Bot, message: Message):
         return
 
     docs = []
+    me = await client.get_me()
+    bot_username = me.username
 
     if DOC_SEARCH == "yes":
         try:
             async for msg in client.USER.search_messages(channel_id,filter='document'):
                 try:
                     file_name = msg.document.file_name
+                    file_size = msg.document.file_size
                     file_id = msg.document.file_id                    
-                    link = msg.link
+                    if cp_channel:
+                        id = msg.message_id
+                        link = f"https://t.me/{bot_username}?start=crfile-{id}-{channel_id}"
+                    else:
+                        link = msg.link
                     data = {
                         '_id': file_id,
                         'channel_id' : channel_id,
                         'file_name': file_name,
+                        'file_size': file_size,
                         'link': link
                     }
                     docs.append(data)
@@ -141,12 +155,18 @@ async def addchannel(client: Bot, message: Message):
             async for msg in client.USER.search_messages(channel_id,filter='video'):
                 try:
                     file_name = msg.video.file_name
-                    file_id = msg.video.file_id                    
-                    link = msg.link
+                    file_id = msg.video.file_id   
+                    file_size = msg.video.file_size                 
+                    if cp_channel:
+                        id = msg.message_id
+                        link = f"https://t.me/{bot_username}?start=crfile-{id}-{channel_id}"
+                    else:
+                        link = msg.link
                     data = {
                         '_id': file_id,
                         'channel_id' : channel_id,
                         'file_name': file_name,
+                        'file_size': file_size,
                         'link': link
                     }
                     docs.append(data)
@@ -162,12 +182,18 @@ async def addchannel(client: Bot, message: Message):
             async for msg in client.USER.search_messages(channel_id,filter='audio'):
                 try:
                     file_name = msg.audio.file_name
+                    file_size = msg.audio.file_size
                     file_id = msg.audio.file_id                    
-                    link = msg.link
+                    if cp_channel:
+                        id = msg.message_id
+                        link = f"https://t.me/{bot_username}?start=get-{id}-{channel_id}"
+                    else:
+                        link = msg.link
                     data = {
                         '_id': file_id,
                         'channel_id' : channel_id,
                         'file_name': file_name,
+                        'file_size': file_size,
                         'link': link
                     }
                     docs.append(data)
