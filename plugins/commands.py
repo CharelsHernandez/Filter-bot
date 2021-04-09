@@ -23,7 +23,7 @@ async def start(client, message):
             expect:
                 return
         try:
-            msgs = await client.get_messages(
+            msg = await client.get_messages(
                 chat_id=chat_id,
                 message_ids=msg_id
             )
