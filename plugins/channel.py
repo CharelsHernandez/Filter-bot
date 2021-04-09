@@ -10,7 +10,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserAlreadyParticipant
 
-from bot import Bot
+from bot import Bot, bot_username
 from config import AUTH_USERS, DOC_SEARCH, VID_SEARCH, MUSIC_SEARCH
 from database.mdb import (
     savefiles,
@@ -120,8 +120,6 @@ async def addchannel(client: Bot, message: Message):
         return
 
     docs = []
-    me = await client.get_me()
-    bot_username = me.username
 
     if DOC_SEARCH == "yes":
         try:
@@ -132,7 +130,7 @@ async def addchannel(client: Bot, message: Message):
                     file_id = msg.document.file_id                    
                     if cp_channel:
                         id = msg.message_id
-                        link = f"https://t.me/{bot_username}?start=crfile-{id}-{channel_id}"
+                        link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
                     else:
                         link = msg.link
                     data = {
@@ -159,7 +157,7 @@ async def addchannel(client: Bot, message: Message):
                     file_size = msg.video.file_size                 
                     if cp_channel:
                         id = msg.message_id
-                        link = f"https://t.me/{bot_username}?start=crfile-{id}-{channel_id}"
+                        link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
                     else:
                         link = msg.link
                     data = {
@@ -186,7 +184,7 @@ async def addchannel(client: Bot, message: Message):
                     file_id = msg.audio.file_id                    
                     if cp_channel:
                         id = msg.message_id
-                        link = f"https://t.me/{bot_username}?start=get-{id}-{channel_id}"
+                        link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
                     else:
                         link = msg.link
                     data = {
@@ -208,7 +206,7 @@ async def addchannel(client: Bot, message: Message):
         await intmsg.edit_text("Channel couldn't be added. Try after some time!")
         return
 
-    await channelgroup(channel_id, channel_name, group_id, group_name)
+    await channelgroup(channel_id, channel_name, group_id, group_name, cp_channel)
 
     await intmsg.edit_text("Channel added successfully!")
 
@@ -366,18 +364,25 @@ async def addnewfiles(client: Bot, message: Message):
     channel_id = message.chat.id
     file_name = media.file_name
     file_id = media.file_id
-    link = message.link
+    file_size = media.file_size
 
-    docs = []
-    data = {
-        '_id': file_id,
-        'channel_id' : channel_id,
-        'file_name': file_name,
-        'link': link
-    }
-    docs.append(data)
-
-    groupids = await findgroupid(channel_id)
-    if groupids:
-        for group_id in groupids:
-            await savefiles(docs, group_id)
+    groups = await findgroupid(channel_id)
+    if groups:
+        i = 0
+        for group in groups:
+            if group[1]:
+                id = message.message_id
+                link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
+            else:
+                link = message.link
+            docs = []
+            data = {
+               '_id': file_id,
+               'channel_id' : channel_id,
+               'file_name': file_name,
+               'file_size': file_size,
+               'link': link
+            }
+            docs.append(data)
+            await savefiles(docs, group[0])
+            i += 1
