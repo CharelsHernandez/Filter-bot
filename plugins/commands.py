@@ -13,7 +13,7 @@ from pyrogram.errors import FloodWait
 @Client.on_message(filters.command(["start"]) & filters.private)
 async def start(client, message):
     text = message.text
-    if ("crfile" in text):
+    if ("get" in text):
         args = text.split(" ", 1)[1]
         argument = args.split("_")
         if len(argument) == 3:
