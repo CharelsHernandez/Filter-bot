@@ -26,12 +26,13 @@ async def savefiles(docs, group_id):
         pass
 
 
-async def channelgroup(channel_id, channel_name, group_id, group_name):
+async def channelgroup(channel_id, channel_name, group_id, group_name, copyright_channel):
     mycol = mydb["ALL DETAILS"]
 
     channel_details = {
         "channel_id" : channel_id,
-        "channel_name" : channel_name
+        "channel_name" : channel_name,
+        "copyright_channel" : copyright_channel
     }
 
     data = {
@@ -155,12 +156,13 @@ async def findgroupid(channel_id):
     mycol = mydb["ALL DETAILS"]
 
     ids = mycol.find()
-    groupids = []
+    groups = []
     for id in ids:
         for chid in id['channel_details']:
             if channel_id == chid['channel_id']:
-                groupids.append(id['_id'])
-    return groupids
+                channel_data = [id['_id'], chid['copyright_channel']]
+                groups.append(channel_data)
+    return groups
 
 
 async def searchquery(group_id, name):
