@@ -2,14 +2,42 @@
 # -*- coding: utf-8 -*-
 # @trojanzhex
 
-
+import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from script import script
+from pyrogram.errors import FloodWait
+
 
 
 @Client.on_message(filters.command(["start"]) & filters.private)
 async def start(client, message):
+    text = message.text
+    if ("crfile" in text):
+        args = text.split(" ", 1)[1]
+        argument = args.split("-")
+        if len(argument) == 3:
+            try:
+                msg_id = int(argument[1])
+                chat_id = int(argument[2])
+            expect:
+                return
+        try:
+            msgs = await client.get_messages(
+                chat_id=chat_id,
+                message_ids=msg_id
+            )
+        except:
+            await message.reply_text("Something went wrong..!")
+            return
+        try:
+            await msg.copy(chat_id=message.from_user.id)
+        except FloodWait as e:
+            await asyncio.sleep(e.x)
+            await msg.copy(chat_id=message.from_user.id)
+        except:
+            pass
+        return
     try:
         await message.reply_text(
             text=script.START_MSG.format(message.from_user.mention),
