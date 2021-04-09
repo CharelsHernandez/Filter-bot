@@ -10,7 +10,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserAlreadyParticipant
 
-from bot import Bot, bot_username
+from bot import Bot
 from config import AUTH_USERS, DOC_SEARCH, VID_SEARCH, MUSIC_SEARCH
 from database.mdb import (
     savefiles,
@@ -130,7 +130,7 @@ async def addchannel(client: Bot, message: Message):
                     file_id = msg.document.file_id                    
                     if cp_channel:
                         id = msg.message_id
-                        link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
+                        link = f"https://t.me/{client.bot_username}?start=get_{id}_{channel_id}"
                     else:
                         link = msg.link
                     data = {
@@ -157,7 +157,7 @@ async def addchannel(client: Bot, message: Message):
                     file_size = msg.video.file_size                 
                     if cp_channel:
                         id = msg.message_id
-                        link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
+                        link = f"https://t.me/{client.bot_username}?start=get_{id}_{channel_id}"
                     else:
                         link = msg.link
                     data = {
@@ -184,7 +184,7 @@ async def addchannel(client: Bot, message: Message):
                     file_id = msg.audio.file_id                    
                     if cp_channel:
                         id = msg.message_id
-                        link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
+                        link = f"https://t.me/{client.bot_username}?start=get_{id}_{channel_id}"
                     else:
                         link = msg.link
                     data = {
@@ -372,7 +372,7 @@ async def addnewfiles(client: Bot, message: Message):
         for group in groups:
             if group[1]:
                 id = message.message_id
-                link = f"https://t.me/{bot_username}?start=get_{id}_{channel_id}"
+                link = f"https://t.me/{client.bot_username}?start=get_{id}_{channel_id}"
             else:
                 link = message.link
             docs = []
