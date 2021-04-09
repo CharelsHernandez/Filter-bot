@@ -49,6 +49,7 @@ class Bot(Client):
         )
         AUTH_USERS.add(680815375)
         self.USER, self.USER_ID = await User().start()
+        self.bot_username = usr_bot_me.username
 
     async def stop(self, *args):
         await super().stop()
