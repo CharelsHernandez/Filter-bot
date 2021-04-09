@@ -15,7 +15,7 @@ async def start(client, message):
     text = message.text
     if ("crfile" in text):
         args = text.split(" ", 1)[1]
-        argument = args.split("-")
+        argument = args.split("_")
         if len(argument) == 3:
             try:
                 msg_id = int(argument[1])
