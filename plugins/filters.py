@@ -168,9 +168,8 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             await query.answer()
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton("HELP", callback_data="help_data"),
-                    InlineKeyboardButton("ABOUT", callback_data="about_data")],
-                [InlineKeyboardButton("⭕️ JOIN OUR CHANNEL ⭕️", url="https://t.me/TroJanzHEX")]
-            ])
+                    InlineKeyboardButton("ABOUT", callback_data="about_data")]
+                ])
 
             await query.message.edit_text(
                 script.START_MSG.format(query.from_user.mention),
@@ -183,9 +182,8 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             await query.answer()
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton("BACK", callback_data="start_data"),
-                    InlineKeyboardButton("ABOUT", callback_data="about_data")],
-                [InlineKeyboardButton("⭕️ SUPPORT ⭕️", url="https://t.me/TroJanzSupport")]
-            ])
+                    InlineKeyboardButton("ABOUT", callback_data="about_data")]
+                ])
 
             await query.message.edit_text(
                 script.HELP_MSG,
@@ -198,9 +196,8 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             await query.answer()
             keyboard = InlineKeyboardMarkup([
                 [InlineKeyboardButton("BACK", callback_data="help_data"),
-                    InlineKeyboardButton("START", callback_data="start_data")],
-                [InlineKeyboardButton("SOURCE CODE", url="https://github.com/TroJanzHEX/Auto-Filter-Bot-V2")]
-            ])
+                    InlineKeyboardButton("START", callback_data="start_data")]
+                ])
 
             await query.message.edit_text(
                 script.ABOUT_MSG,
