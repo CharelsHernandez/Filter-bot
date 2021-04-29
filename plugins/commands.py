@@ -19,10 +19,6 @@ async def start(client, message):
                     [
                         InlineKeyboardButton("HELP", callback_data="help_data"),
                         InlineKeyboardButton("ABOUT", callback_data="about_data"),
-                    ],
-                    [
-                        InlineKeyboardButton(
-                            "⭕️ JOIN OUR CHANNEL ⭕️", url="https://t.me/TroJanzHEX")
                     ]
                 ]
             ),
@@ -42,10 +38,6 @@ async def help(client, message):
                     [
                         InlineKeyboardButton("BACK", callback_data="start_data"),
                         InlineKeyboardButton("ABOUT", callback_data="about_data"),
-                    ],
-                    [
-                        InlineKeyboardButton(
-                            "⭕️ SUPPORT ⭕️", url="https://t.me/TroJanzSupport")
                     ]
                 ]
             ),
@@ -65,10 +57,6 @@ async def about(client, message):
                     [
                         InlineKeyboardButton("BACK", callback_data="help_data"),
                         InlineKeyboardButton("START", callback_data="start_data"),
-                    ],
-                    [
-                        InlineKeyboardButton(
-                            "SOURCE CODE", url="https://github.com/TroJanzHEX/Auto-Filter-Bot-V2")
                     ]
                 ]
             ),
