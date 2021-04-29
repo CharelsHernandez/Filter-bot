@@ -34,7 +34,7 @@ VID_SEARCH = os.environ.get("VID_SEARCH", "no").lower()
 # Should bot search for music files in channels
 MUSIC_SEARCH = os.environ.get("MUSIC_SEARCH", "no").lower()
 
-
+GROUP_ID = int(os.environ.get("GROUP_ID", ""))
 
 
 TG_BOT_SESSION = os.environ.get("TG_BOT_SESSION", "bot")
